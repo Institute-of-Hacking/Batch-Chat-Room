@@ -158,13 +158,11 @@ set /p ban=
 goto B4
 
 :B5
-echo set password=sfasfsafasf >> "chatroomadmin/%ban%.bat"
 echo Server: Banned %ban% >> chat.dat
 goto A
 
 :B3
 cls
-echo set password=sfasfsafasf >> "chatroomadmin/%ban%.bat"
 echo Your Account Was Banned!!!!!
 ping localhost -n 2 >nul
 goto chat
