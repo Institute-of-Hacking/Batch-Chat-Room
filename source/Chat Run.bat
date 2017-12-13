@@ -1,5 +1,43 @@
 @echo off
-title Chatroom V1
+color f0
+title Debug
+echo Setting Admins
+set admin1=Kade
+set admin2=None
+set admin3=None
+echo Setting Dir
+set dirworking=%userprofile%\Documents\chat
+echo Setting Debug
+set debug=Off
+echo Setting If the chat is public
+set chatpublic=On
+echo If statments
+if %debug%==On goto debug
+if %chatpublic%==On goto debug2
+if %debug%==Off goto title
+ping localhost -n 1 >nul
+echo Debug was not set!
+ping localhost -n 3 >nul
+exit
+:debug2
+set debug=Disabled
+goto title
+:debug
+echo Setting Up The Chat Because Debug is %debug% 
+pause >nul
+echo Admins:
+echo Admin 1 is %admin1%
+echo Admin 2 is %admin2%
+echo Admin 3 is %admin3%
+pause >nul
+echo The working dir is 1 is %dirworking%
+pause >nul
+echo Ready!
+pause >nul
+goto title
+
+:title
+title Chat Room By Kade
 :chat
 color f0
 cls
@@ -87,7 +125,9 @@ echo Access denied.
 pause >nul
 goto chat
 :logdone
-cd "%userprofile%/Desktop/New folder/chat/"
+if "%user%"== "None" goto E1
+if "%user%"== "banned" goto B3
+cd "%dirworking%"
 cls
 echo Chat Room
 echo ==============
@@ -98,6 +138,7 @@ pause
 goto s
 
 :S
+if "%user%"== "None" goto E1
 if "%user%"== "banned" goto B3
 echo Server: %realusername% Joined The Chat >> chat.dat
 cd
@@ -105,6 +146,7 @@ start chath.bat
 color f0
 goto A
 :A
+if "%user%"== "None" goto E1
 if "%user%"== "banned" goto B3
 cls
 echo.
@@ -121,7 +163,7 @@ ping localhost -n 1 >nul
 goto A
 
 :R
-if "%realusername%"=="Kade" goto R2
+if %realusername%==%admin1% goto R2
 echo No Admin
 ping localhost -n 2 >nul
 goto A
@@ -146,7 +188,7 @@ cls
 goto A
 
 :B
-if "%realusername%"=="Kade" goto B2
+if %realusername%==%admin1% goto B2
 echo No Admin
 ping localhost -n 2 >nul
 goto A
@@ -155,6 +197,7 @@ goto A
 cls
 echo Ban A User!
 set /p ban=
+if not exist "%ban%.bat" goto E2
 goto B4
 
 :B5
@@ -163,13 +206,36 @@ goto A
 
 :B3
 cls
-echo Your Account Was Banned!!!!!
+color 0c
+echo Error Code 002
+echo %user% Is Banned
 ping localhost -n 2 >nul
+echo Press any key to login
+pause >nul
 goto chat
 
 :b4
 cd "chatroomadmin"
 echo set user=banned>> "%ban%.bat"
 start "%ban%.bat%
-cd "%userprofile%/Desktop/New folder/chat/"
+cd "%dirworking%"
 goto B5
+
+:E1
+cls
+color 0c
+echo Error Code 001
+echo %user% Is Not Available
+ping localhost -n 2 >nul
+echo Press any key to login
+pause >nul
+goto :chat
+
+:E2
+color 0c
+echo Error Code 003
+echo %ban% Does not exist
+ping localhost -n 2 >nul
+echo Press any key to chat
+pause >nul
+goto :A
