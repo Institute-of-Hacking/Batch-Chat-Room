@@ -15,8 +15,8 @@ set debug=Off
 echo Setting If the chat is public
 set chatpublic=On
 echo If statments
-if %debug%==On goto debug
 if %chatpublic%==On goto debug2
+if %debug%==On goto debug
 if %debug%==Off goto title
 ping localhost -n 1 >nul
 echo Debug was not set!
