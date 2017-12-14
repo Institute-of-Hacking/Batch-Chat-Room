@@ -1,12 +1,15 @@
 @echo off
 color f0
 title Debug
-echo Setting Admins
-set admin1=Kade
-set admin2=None
-set admin3=None
 echo Setting Dir
-set dirworking=%userprofile%\Documents\chat
+set dirworking=%userprofile%\Documents\Testingarea
+echo Setting Admins
+set superadmin=Kade
+set superadmin2=None
+set superadmin3=None
+set saveadmin=%userprofile%\Documents\Testingarea\AdminSaves
+echo Setting Admin Dir
+set ad="chatroomadmin"
 echo Setting Debug
 set debug=Off
 echo Setting If the chat is public
@@ -24,11 +27,6 @@ set debug=Disabled
 goto title
 :debug
 echo Setting Up The Chat Because Debug is %debug% 
-pause >nul
-echo Admins:
-echo Admin 1 is %admin1%
-echo Admin 2 is %admin2%
-echo Admin 3 is %admin3%
 pause >nul
 echo The working dir is 1 is %dirworking%
 pause >nul
@@ -95,6 +93,8 @@ echo ============
 echo.
 echo Your account has been successfully created!
 echo.
+echo set admin=no>> "%newname%.bat"
+echo set admintoken=no>> "%newname%.bat"
 echo set user=okay>> "%newname%.bat"
 pause
 goto chat
@@ -138,7 +138,8 @@ pause
 goto s
 
 :S
-cd "chatroomadmin"
+color f0
+cd %ad%
 if "%user%"== "None" goto E1
 if "%user%"== "banned" goto B3
 echo Server: %realusername% Joined The Chat >> chat.dat
@@ -147,6 +148,10 @@ start chath.bat
 color f0
 goto A
 :A
+color f0
+cd %dirworking%
+cd %ad%
+color f0
 if "%user%"== "None" goto E1
 if "%user%"== "banned" goto B3
 cls
@@ -157,44 +162,165 @@ set /p say=Say:
 if "%say%"== "!c" goto C
 if "%say%"== "!r" goto R
 if "%say%"== "!ban" goto B
+if "%say%"== "!sa" goto SA
+if "%say%"== "!cr" goto E3
+if "%say%"== "!ra" goto RA
 if "%user%"== "banned" goto B3
+if "%user%"== "okay" goto send
+:send
 echo User: %realusername%: %say% >> chat.dat
-echo Sent
-ping localhost -n 1 >nul
 goto A
+
+
+:SA
+cls
+if "%user%"== "banned" goto B3
+if %realusername%==%superadmin% goto SA2
+if %realusername%==%superadmin2% goto SA2
+if %realusername%==%superadmin3% goto SA2
+goto E5
+:SA2
+cls
+cd %dirworking%
+cd %ad%
+cls
+echo Set a admin account!
+set /p admin=
+if not exist "%admin%.bat" goto E2
+goto SA3
+
+:SA3
+echo set admin=yes>> "%admin%.bat"
+echo set admintoken=%random%>> "%admin%.bat"
+cd %saveadmin%
+echo set adminauth=auth>> "%admin%.bat"
+cd %dirworking%
+cd %ad%
+echo Done~!
+ping localhost -n 2 >nul
+echo Press any key to chat
+pause >nul
+
+
+
+
+
+
+
+
+
+
+
+
 
 :R
-if %realusername%==%admin1% goto R2
-echo No Admin
-ping localhost -n 2 >nul
-goto A
+if "%user%"== "banned" goto B3
+cd %saveadmin%
+if not exist "%realusername%.bat" goto E4
+call "%realusername%.bat"
+if "%adminauth%"== "auth" R2
+
 
 :R2
+cd %dirworking%
+cd %ad%
 cls
 del "chat.dat"
 echo [Server Refreshed]>> chat.dat
 goto A
 
+
+
+
+
+
+
+
+
+
+
+
 :C
+if "%user%"== "banned" goto B3
 cls
 echo Command Help.
 echo Commands:
 echo !r "Refresh." Admin
 echo !c "Commands." All
 echo !ban "Bans a user" Admin
+echo !sa "Sets a admin" SuperAdmin
+echo !ra "Removes a admin" SuperAdmin
+echo !cr "Shows the credits :D" All
 ping localhost -n 2 >nul
 echo Press any key to chat
 pause >nul
 cls
 goto A
 
-:B
-if %realusername%==%admin1% goto B2
-echo No Admin
+
+
+:RA
+cls
+if "%user%"== "banned" goto B3
+if %realusername%==%superadmin% goto RA2
+if %realusername%==%superadmin2% goto RA2
+if %realusername%==%superadmin3% goto RA2
+goto E5
+
+:RA2
+cls
+cd %saveadmin%
+cls
+echo Remove a admin account!
+set /p admin=
+if not exist "%admin%.bat" goto E2
+goto RA3
+
+:RA3
+cd %dirworking%
+cd %ad%
+echo set admin=no>> "%admin%.bat"
+echo set admintoken=no>> "%admin%.bat"
+cd %saveadmin%
+echo set adminauth=noauth>> "%admin%.bat"
+cd %dirworking%
+cd %ad%
+echo Done~!
 ping localhost -n 2 >nul
+echo Press any key to chat
+pause >nul
 goto A
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:B
+if "%user%"== "banned" goto B3
+cd %saveadmin%
+if not exist "%realusername%.bat" goto E4
+call "%realusername%.bat"
+if "%adminauth%"== "auth" goto B2
+
+
 :B2
+cd %dirworking%
+cd %ad%
+set errorcode=ban
 cls
 echo Ban A User!
 set /p ban=
@@ -217,9 +343,68 @@ goto chat
 
 :b4
 echo set user=banned>> "%ban%.bat"
-start "%ban%.bat%
-cd "%dirworking%"
 goto B5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 :E1
 cls
@@ -232,10 +417,130 @@ pause >nul
 goto :chat
 
 :E2
+cls
 color 0c
 echo Error Code 003
-echo %ban% Does not exist
+echo The User You Entered Does Not Exist
 ping localhost -n 2 >nul
 echo Press any key to chat
 pause >nul
 goto :A
+
+:E3
+cls
+echo Credits:
+color 19
+ping localhost -n 1 >nul
+color 3B
+echo Created by KadeIsWeebNerd#2000
+ping localhost -n 1 >nul
+color 5D
+echo Sourced From CMD Login And Simple Batch Chat.
+ping localhost -n 1 >nul
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color 19
+color 3B
+color 5D
+color f0
+echo Press any key to chat
+pause >nul
+goto A
+
+
+
+
+:E4
+cls
+echo No Admin
+ping localhost -n 2 >nul
+goto A:E4
+cls
+echo No Admin
+ping localhost -n 2 >nul
+goto A
+
+:E5
+cls
+echo No Super Admin
+ping localhost -n 2 >nul
+goto A
