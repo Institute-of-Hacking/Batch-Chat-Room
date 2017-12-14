@@ -2,12 +2,12 @@
 color f0
 title Debug
 echo Setting Dir
-set dirworking=%userprofile%\Documents\Testingarea
+set dirworking=%userprofile%\Desktop\Chat\Chat Backup 2.0\source
 echo Setting Admins
 set superadmin=Kade
 set superadmin2=None
 set superadmin3=None
-set saveadmin=%userprofile%\Documents\Testingarea\AdminSaves
+set saveadmin=%userprofile%\Desktop\Chat\Chat Backup 2.0\source\AdminSaves
 echo Setting Admin Dir
 set ad="chatroomadmin"
 echo Setting Debug
@@ -60,13 +60,14 @@ echo.
 set /p newname="Enter new username:"
 if "%newname%"=="%newname%" goto inputname
 :inputname
-if exist "chatroomadmin" goto skip
-if not exist "chatroomadmin" goto noskip
+cd %dirworking%
+if exist %ad% goto skip
+if not exist %ad% goto noskip
 :noskip
-md "chatroomadmin"
+cd %ad%
 goto skip
 :skip
-cd "chatroomadmin"
+cd %ad%
 if exist "%newname%.bat" goto namexist
 if not exist "%newname%.bat" goto skip2
 :skip2
@@ -77,7 +78,10 @@ echo.
 set /p pswd=Enter new Password:
 if "%pswd%"=="%pswd%" goto inputpass
 :inputpass
-cd "chatroomadmin"
+cd %ad%
+echo set admin=no>> "%newname%.bat"
+echo set admintoken=no>> "%newname%.bat"
+echo set user=okay>> "%newname%.bat"
 echo set password=%pswd%>> "%newname%.bat"
 goto next1
 :namexist
@@ -93,9 +97,6 @@ echo ============
 echo.
 echo Your account has been successfully created!
 echo.
-echo set admin=no>> "%newname%.bat"
-echo set admintoken=no>> "%newname%.bat"
-echo set user=okay>> "%newname%.bat"
 pause
 goto chat
 :1
@@ -173,6 +174,8 @@ goto A
 
 
 :SA
+cd %dirworking%
+call "%realusername%.bat"
 cls
 if "%user%"== "banned" goto B3
 if %realusername%==%superadmin% goto SA2
@@ -214,6 +217,8 @@ pause >nul
 
 
 :R
+cd %dirworking%
+call "%realusername%.bat"
 if "%user%"== "banned" goto B3
 cd %saveadmin%
 if not exist "%realusername%.bat" goto E4
@@ -241,6 +246,8 @@ goto A
 
 
 :C
+cd %dirworking%
+call "%realusername%.bat"
 if "%user%"== "banned" goto B3
 cls
 echo Command Help.
@@ -310,6 +317,8 @@ goto A
 
 
 :B
+cd %dirworking%
+call "%realusername%.bat"
 if "%user%"== "banned" goto B3
 cd %saveadmin%
 if not exist "%realusername%.bat" goto E4
@@ -438,89 +447,139 @@ color 5D
 echo Sourced From CMD Login And Simple Batch Chat.
 ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
-color 3B
-color 5D
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
 color 19
+ping localhost -n 1 >nul
+ping localhost -n 1 >nul
+color 19
+ping localhost -n 1 >nul
 color 3B
+ping localhost -n 1 >nul
 color 5D
+ping localhost -n 1 >nul
+color 19
+ping localhost -n 1 >nul
 color f0
 echo Press any key to chat
 pause >nul
