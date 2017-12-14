@@ -138,6 +138,7 @@ pause
 goto s
 
 :S
+cd "chatroomadmin"
 if "%user%"== "None" goto E1
 if "%user%"== "banned" goto B3
 echo Server: %realusername% Joined The Chat >> chat.dat
@@ -208,14 +209,13 @@ goto A
 cls
 color 0c
 echo Error Code 002
-echo %user% Is Banned
+echo %realusername% Is Banned
 ping localhost -n 2 >nul
 echo Press any key to login
 pause >nul
 goto chat
 
 :b4
-cd "chatroomadmin"
 echo set user=banned>> "%ban%.bat"
 start "%ban%.bat%
 cd "%dirworking%"

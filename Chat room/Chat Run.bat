@@ -6,14 +6,14 @@ set admin1=Kade
 set admin2=None
 set admin3=None
 echo Setting Dir
-set dirworking=%userprofile%\Documents\GitHub\Batch-Chat-Room\Chat room\chatroomadmin
+set dirworking=%userprofile%\Documents\GitHub\Batch-Chat-Room\Chat room\
 echo Setting Debug
 set debug=Off
 echo Setting If the chat is public
 set chatpublic=On
 echo If statments
-if %debug%==On goto debug
 if %chatpublic%==On goto debug2
+if %debug%==On goto debug
 if %debug%==Off goto title
 ping localhost -n 1 >nul
 echo Debug was not set!
@@ -141,11 +141,12 @@ goto s
 if "%user%"== "None" goto E1
 if "%user%"== "banned" goto B3
 echo Server: %realusername% Joined The Chat >> chat.dat
-cd
+cd "chatroomadmin"
 start chath.bat
 color f0
 goto A
 :A
+color f0
 if "%user%"== "None" goto E1
 if "%user%"== "banned" goto B3
 cls
@@ -197,6 +198,7 @@ goto A
 cls
 echo Ban A User!
 set /p ban=
+cd "chatroomadmin"
 if not exist "%ban%.bat" goto E2
 goto B4
 
@@ -208,7 +210,7 @@ goto A
 cls
 color 0c
 echo Error Code 002
-echo %user% Is Banned
+echo %realusername% Is Banned
 ping localhost -n 2 >nul
 echo Press any key to login
 pause >nul
@@ -217,8 +219,6 @@ goto chat
 :b4
 cd "chatroomadmin"
 echo set user=banned>> "%ban%.bat"
-start "%ban%.bat%
-cd "%dirworking%"
 goto B5
 
 :E1
