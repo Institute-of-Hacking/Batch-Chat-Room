@@ -1,0 +1,8 @@
+Command Help Page 1.
+Commands:
+!r "Refresh." Admin
+!c "Commands." All
+!ban "Bans a user" Admin
+!sa "Sets a admin" SuperAdmin
+!ra "Removes a admin" SuperAdmin
+!cr "Shows the credits :D" All

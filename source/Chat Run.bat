@@ -2,12 +2,14 @@
 color f0
 title Debug
 echo Setting Dir
-set dirworking=%userprofile%\Desktop\Chat\Chat Backup 2.0\source
+set dirworking=%userprofile%\Documents\GitHub\Batch-Chat-Room\source
+echo Setting Storage
+set storage=%userprofile%\Documents\GitHub\Batch-Chat-Room\source\storage
 echo Setting Admins
 set superadmin=Kade
 set superadmin2=None
 set superadmin3=None
-set saveadmin=%userprofile%\Desktop\Chat\Chat Backup 2.0\source\AdminSaves
+set saveadmin=%userprofile%\Documents\GitHub\Batch-Chat-Room\source\AdminSaves
 echo Setting Admin Dir
 set ad="chatroomadmin"
 echo Setting Debug
@@ -71,7 +73,7 @@ cd %ad%
 if exist "%newname%.bat" goto namexist
 if not exist "%newname%.bat" goto skip2
 :skip2
-echo set realusername=%newname%> "%newname%.bat"
+echo set realusername=%newname%>> "%newname%.bat"
 goto next
 :next
 echo.
@@ -168,6 +170,7 @@ if "%say%"== "!cr" goto E3
 if "%say%"== "!ra" goto RA
 if "%user%"== "banned" goto B3
 if "%user%"== "okay" goto send
+
 :send
 echo User: %realusername%: %say% >> chat.dat
 goto A
@@ -246,23 +249,27 @@ goto A
 
 
 :C
+set page=1
 cd %dirworking%
 call "%realusername%.bat"
 if "%user%"== "banned" goto B3
 cls
-echo Command Help.
-echo Commands:
-echo !r "Refresh." Admin
-echo !c "Commands." All
-echo !ban "Bans a user" Admin
-echo !sa "Sets a admin" SuperAdmin
-echo !ra "Removes a admin" SuperAdmin
-echo !cr "Shows the credits :D" All
+goto :CS
+
+:CS
+cd %storage%
+type cp%page%.dat
+set page=
 ping localhost -n 2 >nul
-echo Press any key to chat
+echo Press any key to select a page
+echo Type "Exit" without quotes to chat
 pause >nul
+set /p page=
+if "%page%"== "exit" goto A 
+if "%page%"== "Exit" goto A 
+if not exist "cp%page%.dat" goto E7
 cls
-goto A
+goto CS
 
 
 
@@ -590,6 +597,8 @@ goto A
 
 :E4
 cls
+color 0c
+echo Error Code 003
 echo No Admin
 ping localhost -n 2 >nul
 goto A:E4
@@ -600,6 +609,18 @@ goto A
 
 :E5
 cls
+color 0c
+echo Error Code 004
 echo No Super Admin
 ping localhost -n 2 >nul
+goto A
+
+:E7
+cls
+color 0c
+echo Error Code 005
+echo %page% Is not present in storage
+ping localhost -n 2 >nul
+echo Press any key to chat
+pause >nul
 goto A
